@@ -27,7 +27,7 @@ const Structure = ({ children }) => {
 
       <Layout className='pl-[2px]'>
         <Header
-        className='py-4 h-[5.15rem]'
+        className={`py-4 ${!collapsed ? "h-[5.15rem]" : "h-[3rem]" } ? h-[5.15rem]`}
           style={{
             // padding: "1rem",
             background:"#06175d",
@@ -48,7 +48,7 @@ const Structure = ({ children }) => {
               background:"#43996a"
             }}
           />
-          <HeaderContent/>
+          <HeaderContent  />
         </Header>
         {/* <Button
           type="text"

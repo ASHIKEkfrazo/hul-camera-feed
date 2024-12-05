@@ -1,5 +1,4 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Reports from "./Pages/Reports";
 import Layout from "./Outlet/Layout";
 import CameraFeed from "./Pages/CameraFeed";
 import NotFound from "./Pages/NotFound";

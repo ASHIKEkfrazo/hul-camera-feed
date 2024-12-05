@@ -1,25 +1,71 @@
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 import {CameraFilled }  from "@ant-design/icons";
+import { useState } from "react";
+import axios from "axios";
+import {Spin} from "antd";
 
 const CameraFeed  = () =>{
 
+const initialState = {
+    data:[],
+    camStatus:null,
+    loading:false
+}
+const reducer = (state,action)=>{
+    switch(action.type){
+    case "CAM_DATA":
+        return {...state , data:action.payload}
+    case "CAM_STATUS":
+        return {...state, camStatus:action.payload}
+    case 'LOADING':
+        return {...state, loading:action.payload}
+    default: {
+        state
+    }    
+    }
+}
 
+const [state, dispatch ] = useReducer(reducer , initialState)
+
+
+
+useEffect(()=>{
+    const url = "http://localhost:8000/api/cameras/"
+    axios.get(url).then((res)=>dispatch({type:"CAM_DATA",payload:res.data})).catch(err => console.log(err))
+},[])
+
+const handleChange= (val) =>{
+    dispatch({type:'LOADING',payload:true})
+    dispatch({type:"CAM_STATUS",payload:val.id})
+    setTimeout(()=>{
+        dispatch({type:'LOADING',payload:false})
+    },[3000])
+}
     
 return (
 <>
 <div className="  text-3xl p-3 rounded-tr-lg rounded-tl-lg  font-semibold">Cameras </div>
 <div className="flex p-3 gap-3">
-    <div className="w-1/4 h-1/2 min-h-[400px] rounded-lg shadow-lg p-3 flex flex-col gap-4">
-    {/* <div className="text-2xl font-semibold p-1 ">Cameras</div> */}
+    <div className="w-[35%] h-1/2 min-h-[350px] rounded-lg p-3 flex flex-col gap-4" style={{boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px"}}>
+    {
+        state.data?.map((cam, index)=>{
+            return(
+                <li key={cam.id} onClick={()=>handleChange(cam)} className="Camera-link">{cam.name}<CameraFilled /></li>
+            )
+        })
+    }
  
-        <li className="Camera-link">Camera 1 <CameraFilled /></li>
-        <li className="Camera-link">Camera 2 <CameraFilled /></li>
-        <li className="Camera-link">Camera 3 <CameraFilled /></li>
-        <li className="Camera-link">Camera 4 <CameraFilled /></li>
+    
     
     </div>
-    <div className="w-3/4 bg-gray-200 h-1/2 min-h-[400px] rounded-md">
-     
+    <div className="w-full bg-gray-200 h-full rounded-md">
+
+        {  
+            state.loading ? <div className="flex w-full h-[350px] justify-center items-center"><Spin/></div>  :
+            state.data && (
+                <img src={`http://localhost:8000/api/camera/${state.camStatus}/stream/`} className="w-full h-1/2 max-h-[350px]" alt="Camera Loading" />
+            )
+        }
     </div>
 </div>
 </>

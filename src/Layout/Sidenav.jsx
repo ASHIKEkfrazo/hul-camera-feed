@@ -55,7 +55,7 @@ const Sidenav = ({collapsed}) => {
             style={{
               background: currentPage === "reports" ? "#43996a" : "",
               boxShadow:
-                currentPage === "reports" ? "0 20px 27px rgb(0 0 0 / 5%)" : "",
+                currentPage === "reports" ? " rgba(0, 0, 0, 0.24) 0px 3px 8px;" : "",
             }}
           >
             <NavLink to="/" className=" text-decoration-none">
