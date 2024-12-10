@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
-  VideoCameraFilled,
-  SettingFilled
+  ClusteFilled
 } from "@ant-design/icons";
 import { Menu, Modal } from "antd";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import CurrentTime from "../Components/CurrenTime";
+import { ClusterContext } from "../ContextApi/clustercontext";
+import { clusterApiCall } from "../Endpoints/ApiCall";
 
 const Sidenav = ({collapsed}) => {
+  const { state_Cluster,dispatchCluster} = useContext(ClusterContext);
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -29,6 +32,23 @@ const Sidenav = ({collapsed}) => {
     navigate("/login")
   }
 
+  useEffect(()=>{
+    const fetchData =  async ()=>{
+      try {
+        const response = await clusterApiCall()
+        console.log(response.data)
+        dispatchCluster({type:"CLUSTER_DATA" , payload:response.data})
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  },[])
+
+const handleActive  = (data) =>{
+  dispatchCluster({type:"ACTIVE_CLUSTER", payload:data})
+}
+// console.log(activeCluster)
   return (
     <>
       {/* Logout Confirmation Modal */}
@@ -46,25 +66,31 @@ const Sidenav = ({collapsed}) => {
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[currentPage]} // Active link determined by pathname
+          // selectedKeys={[currentPage]} // Active link determined by pathname
           className="flex flex-col gap-3"
         >
           {/* Reports Menu Item */}
-          <Menu.Item
-            key="reports"
-            style={{
-              background: currentPage === "reports" ? "#43996a" : "",
-              boxShadow:
-                currentPage === "reports" ? " rgba(0, 0, 0, 0.24) 0px 3px 8px;" : "",
-            }}
-          >
-            <NavLink to="/" className=" text-decoration-none">
-              <SettingFilled style={{ fontSize: "1rem", color: "#fff" }} />
-              <span className="label" style={{ color: currentPage === "reports" ? "#fff" : "#fff", fontWeight: currentPage === "reports" ? "700" : "500" }}>
-                Machine 
-              </span>
-            </NavLink>
-          </Menu.Item>
+          {
+            state_Cluster?.clusterData?.map((item,index)=>{
+              return (
+                <Menu.Item
+                key={item.id}
+                style={{
+                  background: currentPage === "reports" ? "#43996a" : "",
+                  boxShadow:
+                    currentPage === "reports" ? " rgba(0, 0, 0, 0.24) 0px 3px 8px;" : "",
+                }}
+              >
+                <div  onClick={()=>handleActive(item)}  className=" text-decoration-none">
+                  <ClusteFilled style={{ fontSize: "1rem", color: "#fff" }} />
+                  <span className="label" style={{ color: currentPage === "reports" ? "#fff" : "#fff", fontWeight: currentPage === "reports" ? "700" : "500" }}>
+                   { item.name }
+                  </span>
+                </div>
+              </Menu.Item>
+              )
+            })
+          }
 
           {/* Personal AI Menu Item */}
           {/* <Menu.Item

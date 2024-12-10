@@ -2,13 +2,17 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./Outlet/Layout";
 import CameraFeed from "./Pages/CameraFeed";
 import NotFound from "./Pages/NotFound";
+import { useContext } from "react";
+import { ClusterContext } from "./ContextApi/clustercontext";
 
 function App() {
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
       children: [
+     
         {
           path: '',
           element: <CameraFeed />,

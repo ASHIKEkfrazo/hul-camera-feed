@@ -8,6 +8,8 @@ import Sidenav from './Sidenav';
 import "../Styles/Layout/index.css"
 import HeaderContent from './Header';
 import FooterContent from './Footer';
+import ClusterContextWrapper from '../ContextApi/clustercontext';
+import { CamDataContextWrapper } from '../ContextApi/CamDataContext';
 const { Header, Sider, Content, Footer } = Layout;
 
 const Structure = ({ children }) => {
@@ -20,10 +22,14 @@ const Structure = ({ children }) => {
 
   return (
 
+      <ClusterContextWrapper>
+        <CamDataContextWrapper>
+
+      
     <Layout className='layout' >
-      <Sider trigger={null} collapsible collapsed={collapsed} >
-        <Sidenav collapsed={collapsed} />
-      </Sider>
+        <Sider trigger={null} collapsible collapsed={collapsed} >
+          <Sidenav collapsed={collapsed} />
+        </Sider>
 
       <Layout className='pl-[2px]'>
         <Header
@@ -69,6 +75,7 @@ const Structure = ({ children }) => {
       
           }}
         >
+      
           {children}
         </Content>
         <Footer
@@ -79,6 +86,9 @@ const Structure = ({ children }) => {
         </Footer>
       </Layout>
     </Layout>
+    </CamDataContextWrapper>
+    </ClusterContextWrapper>
+
   );
 };
 export default Structure;
