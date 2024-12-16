@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import {
-  ClusteFilled
+  ClusterOutlined
 } from "@ant-design/icons";
 import { Menu, Modal } from "antd";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
@@ -82,7 +82,7 @@ const handleActive  = (data) =>{
                 }}
               >
                 <div  onClick={()=>handleActive(item)}  className=" text-decoration-none">
-                  <ClusteFilled style={{ fontSize: "1rem", color: "#fff" }} />
+                  <ClusterOutlined style={{ fontSize: "1rem", color: "#fff" }} />
                   <span className="label" style={{ color: currentPage === "reports" ? "#fff" : "#fff", fontWeight: currentPage === "reports" ? "700" : "500" }}>
                    { item.name }
                   </span>
