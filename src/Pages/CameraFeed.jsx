@@ -11,10 +11,6 @@ const CameraFeed  = () =>{
     const {state_Cluster , dispatchCluster } = useContext(ClusterContext)
     const {state_CamData , dispatchCamData} = useContext(CamDataContext)
 
-
-
-
-
 useEffect(()=>{
     const url = `http://localhost:8000/api/clusters/${state_Cluster?.activeCluster?.id}/cameras/`
     axios.get(url).then((res)=>dispatchCamData({type:"CAM_DATA",payload:res.data})).catch(err => console.log(err))

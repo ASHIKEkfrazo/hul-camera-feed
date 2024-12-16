@@ -9,11 +9,9 @@ const Layout = () => {
 
   return (
     <>
-   
           <Structure>
             <Outlet />
           </Structure>
-
 
     </>
   )

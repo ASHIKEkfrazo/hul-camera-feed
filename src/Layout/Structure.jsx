@@ -23,9 +23,7 @@ const Structure = ({ children }) => {
   return (
 
       <ClusterContextWrapper>
-        <CamDataContextWrapper>
-
-      
+        <CamDataContextWrapper>  
     <Layout className='layout' >
         <Sider trigger={null} collapsible collapsed={collapsed} >
           <Sidenav collapsed={collapsed} />
