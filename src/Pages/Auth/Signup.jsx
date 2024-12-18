@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+    const navigate = useNavigate()
   const {
     handleSubmit,
     control,
@@ -22,8 +24,9 @@ const Signup = () => {
           <p className="text-sm text-center mb-6">
             Already have an account? Log in now and get started!
           </p>
-          <button className="bg-white text-[rgb(6,23,93)] font-semibold py-2 px-6 rounded-full hover:bg-gray-100">
-            LOGIN
+          <button className="bg-white text-[rgb(6,23,93)] font-semibold py-2 px-6 rounded-full hover:bg-gray-100"
+           onClick={()=>navigate('/')}>
+            LOGIN 
           </button>
         </div>
 
@@ -44,8 +47,8 @@ const Signup = () => {
                 control={control}
                 rules={{ required: "Username is required" }}
                 render={({ field }) => (
-                  <div className="flex items-center border-2 border-[rgb(6,23,93)] rounded-lg p-2 gap-2 shadow-sm">
-                    <span className="text-[rgb(6,23,93)]">
+                  <div className="flex items-center border-1 rounded-lg p-2 gap-2 shadow-sm">
+                    <span className="text-gray-500">
                       <i className="fas fa-user"></i>
                     </span>
                     <input
@@ -80,8 +83,8 @@ const Signup = () => {
                   },
                 }}
                 render={({ field }) => (
-                  <div className="flex items-center border-2 border-[rgb(6,23,93)] rounded-lg p-2 gap-2 shadow-sm">
-                    <span className="text-[rgb(6,23,93)]">
+                  <div className="flex items-center border-1  rounded-lg p-2 gap-2 shadow-sm">
+                    <span className="text-gray-500">
                       <i className="fas fa-envelope"></i>
                     </span>
                     <input
@@ -116,8 +119,8 @@ const Signup = () => {
                   },
                 }}
                 render={({ field }) => (
-                  <div className="flex items-center border-2 border-[rgb(6,23,93)] rounded-lg p-2 gap-2 shadow-sm">
-                    <span className="text-[rgb(6,23,93)]">
+                  <div className="flex items-center border-1  rounded-lg p-2 gap-2 shadow-sm">
+                    <span className="text-gray-500">
                       <i className="fas fa-lock"></i>
                     </span>
                     <input
@@ -136,38 +139,7 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Confirm Password Field */}
-            <div>
-              <label className="block text-gray-600 mb-2" htmlFor="confirmPassword">
-                Confirm Password
-              </label>
-              <Controller
-                name="confirmPassword"
-                control={control}
-                rules={{
-                  required: "Please confirm your password",
-                }}
-                render={({ field }) => (
-                  <div className="flex items-center border-2 border-[rgb(6,23,93)] rounded-lg p-2 gap-2 shadow-sm">
-                    <span className="text-[rgb(6,23,93)]">
-                      <i className="fas fa-lock"></i>
-                    </span>
-                    <input
-                      {...field}
-                      type="password"
-                      placeholder="Confirm your password"
-                      className="w-full outline-none bg-transparent text-gray-800"
-                    />
-                  </div>
-                )}
-              />
-              {errors.confirmPassword && (
-                <span className="text-red-500 text-sm">
-                  {errors.confirmPassword.message}
-                </span>
-              )}
-            </div>
-
+          
             {/* Sign Up Button */}
             <button
               type="submit"

@@ -3,8 +3,8 @@ import { Button, Input, Select, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { notification } from 'antd';
-
 import { loginApi } from '../../Endpoints/authApi';
+
 
 
 const Login = () => {
@@ -126,7 +126,8 @@ const Login = () => {
           <p className="text-sm text-center mb-6">
             Enter your details and start your journey with us
           </p>
-          <button className="bg-white text-[rgb(6,23,93)] font-semibold py-2 px-6 rounded-full hover:bg-gray-100">
+          <button className="bg-white text-[rgb(6,23,93)] font-semibold py-2 px-6 rounded-full hover:bg-gray-100"
+           onClick={()=>navigate('/signup')}>
             SIGNUP
           </button>
         </div>
@@ -210,7 +211,7 @@ const Login = () => {
                 Remember me
               </label>
               <a href="#" className="hover:text-[rgb(6,23,93)]">
-                Forgot Password?
+                Reset Password?
               </a>
             </div>
   
@@ -226,7 +227,7 @@ const Login = () => {
       </div>
     </div>
   );
-  
+ 
 }
 
 export default Login
