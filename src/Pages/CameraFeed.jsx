@@ -56,9 +56,6 @@ return (
        : <div className="text-black flex items-center w-full h-full justify-center font-bold">Please Select Cluster </div>
  
       }
-      
-    
-    
     </div>
     <div className="w-full bg-gray-200 h-full rounded-md">
         {
