@@ -11,10 +11,10 @@ const CameraFeed  = () =>{
     const {state_Cluster , dispatchCluster } = useContext(ClusterContext)
     const {state_CamData , dispatchCamData} = useContext(CamDataContext)
 
-useEffect(()=>{
-    const url = `http://localhost:8000/api/clusters/${state_Cluster?.activeCluster?.id}/cameras/`
-    axios.get(url).then((res)=>dispatchCamData({type:"CAM_DATA",payload:res.data})).catch(err => console.log(err))
-},[state_Cluster?.activeCluster])
+// useEffect(()=>{
+//     const url = `http://localhost:8000/api/clusters/${state_Cluster?.activeCluster?.id}/cameras/`
+//     axios.get(url).then((res)=>dispatchCamData({type:"CAM_DATA",payload:res.data})).catch(err => console.log(err))
+// },[state_Cluster?.activeCluster])
 
 const handleChange= (val) =>{
     dispatchCamData({type:'LOADING',payload:true})
@@ -25,7 +25,6 @@ const handleChange= (val) =>{
     },[3000])
 }
     
-console.log(state_CamData.data)
 return (
 <>
 <div className="  text-3xl p-3 rounded-tr-lg rounded-tl-lg  font-semibold">{state_Cluster?.activeCluster?.name}</div>

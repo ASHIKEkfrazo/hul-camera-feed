@@ -3,19 +3,22 @@ import {
   ClusterOutlined
 } from "@ant-design/icons";
 import { Menu, Modal } from "antd";
-import { useNavigate, NavLink, useLocation } from "react-router-dom";
+import { useNavigate, NavLink, useLocation ,Link  } from "react-router-dom";
 import CurrentTime from "../Components/CurrenTime";
 import { ClusterContext } from "../ContextApi/clustercontext";
-import { clusterApiCall } from "../Endpoints/ApiCall";
-import { Link } from 'react-router-dom';
+import { clusterApiCall, clusterMachineCameras, clusterMcahineApi } from "../Endpoints/ApiCall";
+import { CamDataContext } from "../ContextApi/CamDataContext";
+
 const Sidenav = ({collapsed}) => {
   const { state_Cluster,dispatchCluster} = useContext(ClusterContext);
+  const {state_CamData , dispatchCamData} = useContext(CamDataContext)
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   // Extract the current page from the path
-  const currentPage = pathname === "/" ? "reports" : pathname.replace("/", "");
+  const currentCluster =  state_Cluster?.clusterData?.id;
+  const currentMachine = state_Cluster?.clusterMachineData?.id;
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -45,10 +48,30 @@ const Sidenav = ({collapsed}) => {
     fetchData()
   },[])
 
-const handleActive  = (data) =>{
+
+
+
+
+const handleActive  = (type,data) =>{
   dispatchCluster({type:"ACTIVE_CLUSTER", payload:data})
-}
-// console.log(activeCluster)
+  if(type === "menu"){
+    clusterMcahineApi(data.id).then((res)=>{
+      dispatchCluster({type:"CLUSTER_MACHINE_DATA", payload:res.data})
+    })
+    .catch(err=>console.log(err))
+  }
+
+  if(type === "sub-menu"){
+    console.log(data)
+    clusterMachineCameras(data.id).then((res)=>{
+      dispatchCamData({type:"CAM_DATA", payload:res.data})
+    })
+    .catch(err=>console.log(err))
+    }
+  }
+
+const currentPage = "";
+
   return (
     <>
       {/* Logout Confirmation Modal */}
@@ -64,68 +87,80 @@ const handleActive  = (data) =>{
           /> 
         </div>
         <Menu
-          theme="dark"
-          mode="inline"
-          // selectedKeys={[currentPage]} // Active link determined by pathname
-          className="flex flex-col gap-3"
-        >
-          {/* Reports Menu Item */}
-          {
-            state_Cluster?.clusterData?.map((item,index)=>{
-              return (
-                <Menu.Item
-                key={item.id}
-                style={{
-                  background: currentPage === "reports" ? "#43996a" : "",
-                  boxShadow:
-                    currentPage === "reports" ? " rgba(0, 0, 0, 0.24) 0px 3px 8px;" : "",
-                }}
-              >
-                <div  onClick={()=>handleActive(item)}  className=" text-decoration-none">
-                  <ClusterOutlined style={{ fontSize: "1rem", color: "#fff" }} />
-                  <span className="label" style={{ color: currentPage === "reports" ? "#fff" : "#fff", fontWeight: currentPage === "reports" ? "700" : "500" }}>
-                   { item.name }
-                  </span>
-                </div>
-              </Menu.Item>
-              )
-            })
-          }
-
-          {/* Personal AI Menu Item */}
-          {/* <Menu.Item
-            key="personal"
+  mode="inline"
+  className="flex flex-col gap-3"
+>
+  {/* Reports Menu Item */}
+  {state_Cluster?.clusterData?.map((item) => (
+    state_Cluster.clusterMachineData && state_Cluster.clusterMachineData.length > 0 ? (
+      <Menu.SubMenu
+        key={item.id}
+        title={
+          <span>
+            <ClusterOutlined style={{ fontSize: "1rem", color: "#fff" }} />
+            <span
+              className="label"
+              style={{
+                color: currentPage === item.id ? "#fff" : "#fff",
+                fontWeight: currentPage === item.id ? "700" : "500",
+              }}
+            >
+              {item.name}
+            </span>
+          </span>
+        }
+        style={{
+          background: currentCluster === item.id ? "#06175d" : "#06175d",
+          boxShadow:
+            currentPage === item.id
+              ? "rgba(0, 0, 0, 0.24) 0px 3px 8px;"
+              : "",
+        }}
+      >
+        {state_Cluster.clusterMachineData.map((child) => (
+          <Menu.Item
+            key={child.id}
             style={{
-              background: currentPage === "personal" ? "#b2ecec" : "",
-              boxShadow:
-                currentPage === "personal" ? "0 20px 27px rgb(0 0 0 / 5%)" : "",
+              background: currentMachine === child.id ? "#43996a" : "#06175d",
             }}
+            onClick={() => handleActive("sub-menu",child)}
           >
-            <NavLink to="/personal" className=" text-decoration-none">
-              <CodepenCircleOutlined
-                style={{ fontSize: "1.2rem", color: "#000" }}
-              />
-              <span className="label" style={{ color: currentPage === "personal" ? "#000" : "#000", fontWeight: currentPage === "personal" ? "700" : "500" }}>
-                Personal AI
-              </span>
-            </NavLink>
-          </Menu.Item> */}
-         
-
-          {/* Logout Menu Item */}
-          {/* <Menu.Item key="logout" className="bg-white shadow-lg" onClick={showModal}>
-            <div to="/personal" className="p-3 text-decoration-none">
-              <LogoutOutlined
-                style={{ fontSize: "1.2rem", color: "#000" }}
-              />
-              <span className=" cursor-pointer text-black font-bold" >
-                Logout
-              </span>
-            </div>
-
-
-          </Menu.Item> */}
-
+            <span
+              style={{
+                color: currentPage === child.id ? "#fff" : "#fff",
+                fontWeight: currentPage === child.id ? "700" : "500",
+              }}
+            >
+              {child.name}
+            </span>
+          </Menu.Item>
+        ))}
+      </Menu.SubMenu>
+    ) : (
+      <Menu.Item
+        key={item.id}
+        style={{
+          background: currentPage === item.id ? "#43996a" : "#06175d",
+          boxShadow:
+            currentPage === item.id
+              ? "rgba(0, 0, 0, 0.24) 0px 3px 8px;"
+              : "",
+        }}
+        onClick={() => handleActive("menu",item)}
+      >
+        <ClusterOutlined style={{ fontSize: "1rem", color: "#fff" }} />
+        <span
+          className="label"
+          style={{
+            color: currentPage === item.id ? "#fff" : "#fff",
+            fontWeight: currentPage === item.id ? "700" : "500",
+          }}
+        >
+          {item.name}
+        </span>
+      </Menu.Item>
+    )
+  ))}
       <Menu.Item key="settings" className="bg-white shadow-lg">
         <Link to="/machine/config" className="p-3 text-decoration-none">
           <span className="cursor-pointer text-black font-bold">
@@ -133,7 +168,7 @@ const handleActive  = (data) =>{
           </span>
         </Link>
       </Menu.Item>
-        </Menu>
+</Menu>
       </div>
           <CurrentTime collapsed={collapsed}/>
       

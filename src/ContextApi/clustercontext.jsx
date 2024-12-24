@@ -6,9 +6,9 @@ import { createContext } from "react";
 
 const ClusterContextWrapper = ({children})=>{
 
-
     const initialstate_Cluster = {
         clusterData:[],
+        clusterMachineData:[],
         activeCluster:null
     }
 
@@ -18,8 +18,13 @@ const ClusterContextWrapper = ({children})=>{
         case "CLUSTER_DATA":
             return{...state_Cluster,clusterData:action.payload}
         case "ACTIVE_CLUSTER":
-            return {...state_Cluster,activeCluster:action.payload}    
+            return {...state_Cluster,activeCluster:action.payload}   
+        case 'CLUSTER_MACHINE_DATA':
+            return{...state_Cluster,clusterMachineData:action.payload}    
+        default:
+            return state_Cluster    
         }
+      
     }
 
     // const [state_Cluster, dispatchCluster] = useReducer(reducer,{
