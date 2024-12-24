@@ -5,7 +5,8 @@ import NotFound from "./Pages/NotFound";
 import Login from "./Pages/Auth/Login"
 import Signup from "./Pages/Auth/Signup";
 import { useContext } from "react";
-import { ClusterContext } from "./ContextApi/clustercontext";
+import { Clusterconfig } from "./Pages/Clusterconfig";
+
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
       path: "signup",
       element: <Signup />,
     },
+    
     {
       path: "machine",
       element: <Layout />,
@@ -32,6 +34,10 @@ function App() {
         //   path: 'personal',
         //   element: <Personal />,
         // },
+        {
+          path:"config",
+          element:<Clusterconfig />
+        },
       ]
     },
     {

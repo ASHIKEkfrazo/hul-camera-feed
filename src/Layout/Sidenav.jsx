@@ -7,7 +7,7 @@ import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import CurrentTime from "../Components/CurrenTime";
 import { ClusterContext } from "../ContextApi/clustercontext";
 import { clusterApiCall } from "../Endpoints/ApiCall";
-
+import { Link } from 'react-router-dom';
 const Sidenav = ({collapsed}) => {
   const { state_Cluster,dispatchCluster} = useContext(ClusterContext);
 
@@ -110,6 +110,7 @@ const handleActive  = (data) =>{
               </span>
             </NavLink>
           </Menu.Item> */}
+         
 
           {/* Logout Menu Item */}
           {/* <Menu.Item key="logout" className="bg-white shadow-lg" onClick={showModal}>
@@ -124,6 +125,14 @@ const handleActive  = (data) =>{
 
 
           </Menu.Item> */}
+
+      <Menu.Item key="settings" className="bg-white shadow-lg">
+        <Link to="/machine/config" className="p-3 text-decoration-none">
+          <span className="cursor-pointer text-black font-bold">
+            Settings
+          </span>
+        </Link>
+      </Menu.Item>
         </Menu>
       </div>
           <CurrentTime collapsed={collapsed}/>

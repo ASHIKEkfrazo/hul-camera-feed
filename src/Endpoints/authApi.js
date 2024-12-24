@@ -10,3 +10,12 @@ export const loginApi = async (data) => {
         throw error
     }
 }
+export const signupApi = async (data) => {
+    try {
+        const response = await apiCall.post("users/", data); // Assuming "signup/" is the endpoint
+        return response;
+    } catch (error) {
+        console.error("Error During Signup:", error);
+        throw error;
+    }
+};

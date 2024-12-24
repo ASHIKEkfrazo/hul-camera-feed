@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { notification } from 'antd';
 import { loginApi } from '../../Endpoints/authApi';
-
+import './login.css';
 
 
 const Login = () => {
@@ -27,14 +27,16 @@ const Login = () => {
         localStorage.setItem("login", true)
         if (res?.data?.message) {
           setTimeout(() => {
-            navigate('/');
+            navigate('/machine');
           }, [1000])
         }
       })
       .catch((err) => {
         // Use openNotification with the error message
-        openNotification(err?.response?.data?.error || 'Login failed.', 'error');
-        // //console.log(err)
+       // openNotification(err?.response?.data?.error || 'Login failed.', 'error');
+        openNotification(err?.response.data.error || 'Login failed.', 'error');
+
+       // console.log(err)
       });
   };
 
@@ -118,8 +120,10 @@ const Login = () => {
   //   </>
   // )
   return (
+    <>
+    {contextHolder}
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex max-w-4xl w-full bg-white shadow-2xl rounded-2xl overflow-hidden">
+      <div className="flex max-w-3xl w-full bg-white shadow-2xl rounded-2xl overflow-hidden">
         {/* Right Section: Custom Blue Background */}
         <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-r from-[rgb(6,23,93)] to-[rgb(6,23,93)] text-white p-8">
           <h1 className="text-3xl font-bold mb-4">WELCOME!</h1>
@@ -134,7 +138,14 @@ const Login = () => {
   
         {/* Left Section: Login Form */}
         <div className="w-full md:w-1/2 p-8">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+        <div className="flex justify-center bg-[#06175d] p-1">
+          <img
+            src="https://eimkeia.stripocdn.email/content/guids/CABINET_8270216c780e362a1fbcd636b59c67ae376eb446dc5f95e17700b638b8c3f618/images/indus_logo_dev.png"
+            alt="Logo"
+            className="object-contain w-36"
+          /> 
+        </div>
+          <h2 className="text-2xl font-bold my-2 text-gray-800 text-center">
             Login 
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -179,8 +190,8 @@ const Login = () => {
                 rules={{
                   required: "Password is required",
                   minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters long",
+                    value: 8,
+                    message: "Password must be at least 8 characters long",
                   },
                 }}
                 render={({ field }) => (
@@ -226,6 +237,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
  
 }
