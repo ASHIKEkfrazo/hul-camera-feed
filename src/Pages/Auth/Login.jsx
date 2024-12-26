@@ -3,7 +3,8 @@ import { Button, Input, Select, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { notification } from 'antd';
-import { loginApi } from '../../Endpoints/authApi';
+import { loginApi } from '../../Endpoints/authApi'; 
+import {KeyOutlined ,MailFilled} from "@ant-design/icons"
 import './login.css';
 
 
@@ -161,7 +162,8 @@ const Login = () => {
                 render={({ field }) => (
                   <div className="flex items-center border rounded-lg p-2 gap-2 shadow-sm">
                     <span className="text-gray-500">
-                      <i className="fas fa-envelope"></i>
+                      {/* <i className="fas fa-envelope"></i> */}
+                      <MailFilled />
                     </span>
                     <input
                       {...field}
@@ -197,7 +199,8 @@ const Login = () => {
                 render={({ field }) => (
                   <div className="flex items-center border rounded-lg rounded-left-lg p-2 gap-2 shadow-sm">
                     <span className="text-gray-500">
-                      <i className="fas fa-key"></i>
+                      {/* <i className="fas fa-key"></i> */}
+                      <KeyOutlined />
                     </span>
                     <input
                       {...field}
