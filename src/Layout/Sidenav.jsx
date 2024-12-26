@@ -86,6 +86,7 @@ const currentPage = "";
   className="flex flex-col gap-3"
 >
   {/* Reports Menu Item */}
+
   {state_Cluster?.clusterData?.map((item) => (
 
       <Menu.Item
@@ -115,6 +116,13 @@ const currentPage = "";
       </Menu.Item>
     
   ))}
+  {
+    !state_Cluster?.clusterData?.length > 0 &&(
+      <div className="text-center h-24 flex items-center justify-center font-bold">
+        No clusters found
+      </div>
+    )
+  }
       <Menu.Item key="settings" className="bg-white shadow-lg">
         <Link to="config" className="p-3 text-decoration-none">
           <span className="cursor-pointer text-black font-bold">
