@@ -5,7 +5,7 @@ const clusterApiCall =  async()=>{
     try {
         let url = 'clusters/'
         const response =  await apiCall.get(url)
-        return response.data.results
+        return response
 
     } catch (error) {
         console.log(error)
@@ -16,9 +16,9 @@ const clusterApiCall =  async()=>{
 const clusterMcahineApi = async(clusterId) =>{
     try {
      
-        let url = `machines/`
+        let url = `machines/?cluster_id=${clusterId}`
         const response = await apiCall.get(url)
-        return response.data.results
+        return response
     } catch (error) {
         console.log(error)
     }
@@ -27,7 +27,7 @@ const clusterMcahineApi = async(clusterId) =>{
 const clusterMachineCameras = async(machineId)=>{
     try {
      
-        let url = `cameras/`
+        let url = `cameras/?machine_id=${machineId}`
         const response = await apiCall.get(url)
         return response.data.results
     } catch (error) {

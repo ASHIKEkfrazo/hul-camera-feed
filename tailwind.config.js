@@ -18,6 +18,15 @@ export default {
         'sans': ['ui-sans-serif',],
         'serif': ['ui-monospace',],
       },
+      keyframes: {
+        slideDown: {
+          '0%': { maxHeight: '0', },
+          '100%': { maxHeight: '500px',}, // Adjust max-height based on content
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 5s ease-out',
+      },
     },
   },
   plugins: [],

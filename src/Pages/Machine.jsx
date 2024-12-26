@@ -56,7 +56,7 @@ export const Machine = () => {
     
     try {
       // Replace with your API call
-      await addMachineAPI({ name: newMachineName });
+      await addMachineAPI({ name: newMachineName ,cluster:selectedCluster });
       
      
       fetchMachines()
@@ -81,7 +81,7 @@ export const Machine = () => {
     
     try {
       // Replace with your API call
-      await updateMachineAPI(editingMachine.id, { name: newMachineName });
+      await updateMachineAPI(editingMachine.id, { name: newMachineName,cluster:selectedCluster });
       
       // Simulated update
       const updatedMachine = machine.map(c => 
@@ -201,7 +201,7 @@ export const Machine = () => {
                   Select Cluster Name
                 </option>
                 {clusters.map((cluster) => (
-                  <option key={cluster.id} value={cluster.name}>
+                  <option key={cluster.id} value={cluster.id}>
                     {cluster.name}
                   </option>
                 ))}

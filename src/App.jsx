@@ -21,12 +21,12 @@ function App() {
     },
     
     {
-      path: "machine",
+      path: "",
       element: <Layout />,
       children: [
      
         {
-          path: '',
+          path: 'dashboard',
           element: <CameraFeed />,
         },
 

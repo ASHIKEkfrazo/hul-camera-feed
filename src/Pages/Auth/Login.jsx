@@ -27,7 +27,7 @@ const Login = () => {
         localStorage.setItem("login", true)
         if (res?.data?.message) {
           setTimeout(() => {
-            navigate('/machine');
+            navigate('/dashboard');
           }, [1000])
         }
       })

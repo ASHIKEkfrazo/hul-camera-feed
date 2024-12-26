@@ -39,8 +39,8 @@ const Sidenav = ({collapsed}) => {
     const fetchData =  async ()=>{
       try {
         const response = await clusterApiCall()
-        console.log(response.data)
-        dispatchCluster({type:"CLUSTER_DATA" , payload:response.data})
+        // console.log(response.data.results)
+        dispatchCluster({type:"CLUSTER_DATA" , payload:response.data.results})
       } catch (error) {
         console.log(error)
       }
@@ -54,20 +54,15 @@ const Sidenav = ({collapsed}) => {
 
 const handleActive  = (type,data) =>{
   dispatchCluster({type:"ACTIVE_CLUSTER", payload:data})
+
   if(type === "menu"){
     clusterMcahineApi(data.id).then((res)=>{
-      dispatchCluster({type:"CLUSTER_MACHINE_DATA", payload:res.data})
+      dispatchCluster({type:"CLUSTER_MACHINE_DATA", payload:res.data.results})
     })
     .catch(err=>console.log(err))
   }
 
-  if(type === "sub-menu"){
-    console.log(data)
-    clusterMachineCameras(data.id).then((res)=>{
-      dispatchCamData({type:"CAM_DATA", payload:res.data})
-    })
-    .catch(err=>console.log(err))
-    }
+
   }
 
 const currentPage = "";
@@ -92,51 +87,7 @@ const currentPage = "";
 >
   {/* Reports Menu Item */}
   {state_Cluster?.clusterData?.map((item) => (
-    state_Cluster.clusterMachineData && state_Cluster.clusterMachineData.length > 0 ? (
-      <Menu.SubMenu
-        key={item.id}
-        title={
-          <span>
-            <ClusterOutlined style={{ fontSize: "1rem", color: "#fff" }} />
-            <span
-              className="label"
-              style={{
-                color: currentPage === item.id ? "#fff" : "#fff",
-                fontWeight: currentPage === item.id ? "700" : "500",
-              }}
-            >
-              {item.name}
-            </span>
-          </span>
-        }
-        style={{
-          background: currentCluster === item.id ? "#06175d" : "#06175d",
-          boxShadow:
-            currentPage === item.id
-              ? "rgba(0, 0, 0, 0.24) 0px 3px 8px;"
-              : "",
-        }}
-      >
-        {state_Cluster.clusterMachineData.map((child) => (
-          <Menu.Item
-            key={child.id}
-            style={{
-              background: currentMachine === child.id ? "#43996a" : "#06175d",
-            }}
-            onClick={() => handleActive("sub-menu",child)}
-          >
-            <span
-              style={{
-                color: currentPage === child.id ? "#fff" : "#fff",
-                fontWeight: currentPage === child.id ? "700" : "500",
-              }}
-            >
-              {child.name}
-            </span>
-          </Menu.Item>
-        ))}
-      </Menu.SubMenu>
-    ) : (
+
       <Menu.Item
         key={item.id}
         style={{
@@ -148,6 +99,8 @@ const currentPage = "";
         }}
         onClick={() => handleActive("menu",item)}
       >
+        <NavLink to="dashboard" className="no-underline">
+
         <ClusterOutlined style={{ fontSize: "1rem", color: "#fff" }} />
         <span
           className="label"
@@ -158,11 +111,12 @@ const currentPage = "";
         >
           {item.name}
         </span>
+        </NavLink>
       </Menu.Item>
-    )
+    
   ))}
       <Menu.Item key="settings" className="bg-white shadow-lg">
-        <Link to="/machine/config" className="p-3 text-decoration-none">
+        <Link to="config" className="p-3 text-decoration-none">
           <span className="cursor-pointer text-black font-bold">
             Settings
           </span>
